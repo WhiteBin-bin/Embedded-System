@@ -9,12 +9,12 @@ urlpatterns = [
     path('getVib/<int:cnt>', views.getVib, name='getVib'),
     path('getProx/<int:cnt>', views.getProx, name='getProx'),
     path('getLightD/<int:cnt>', views.getLightD, name= 'getLightD'),
-    path('getDetector/<int:cnt>', views.getDetector, name= 'getDetector'),
+    path('getirDetect/<int:cnt>', views.getirDetect, name= 'getirDetect'),
 
     path('setTemp', views.setTemp, name='setTemp'),
     path('setHumi', views.setHumi, name='setHumi'),
     path('setVib', views.setVib, name='setVib'),
     path('setProx', views.setProx, name='setProx'),
     path('setLightD', views.setLightD, name= 'setLightD'),
-    path('setDetector', views.setDetector, name= 'setDetector'),
+    path('setirDetect', views.setirDetect, name= 'setirDetect'),
 ]

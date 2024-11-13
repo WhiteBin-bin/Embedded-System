@@ -75,11 +75,11 @@ def setLightD(request):
 
 
 # 장애물 센서
-def getDetector(request, cnt):
+def getirDetect(request, cnt):
     results = list(Detector.objects.all().order_by('-reg_date').values())[:cnt][::-1]
     return JsonResponse(results, safe=False)
 
-def setDetector(request):
+def setirDetect(request):
     try:
         Detector.objects.create(value = request.POST['value'])
         return JsonResponse({"message": "OK"}, status=200)
