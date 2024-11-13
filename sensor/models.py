@@ -55,7 +55,7 @@ class LightSensor(models.Model):
 # 장애물 센서
 class DetectorSensor(models.Model):
 	reg_date = models.DateTimeField(editable=False)
-	value = models.BooleanField()
+	value = models.FloatField()
 	
 	def save(self, *args, **kwargs):
 		if not self.id:
