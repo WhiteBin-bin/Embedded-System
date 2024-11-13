@@ -43,14 +43,14 @@ class ProximitySensor(models.Model):
 # Create your models here.
 
 #조도 센서
-class LightDetector(models.Model):
+class LightSensor(models.Model):
 	reg_date = models.DateTimeField(editable=False)
 	value = models.IntegerField()
 
 	def save(self, *args, **kwargs):
 		if not self.id:
 			self.reg_date = timezone.now()
-		return super(LightDetector, self).save(*args, **kwargs)
+		return super(LightSensor, self).save(*args, **kwargs)
 	
 # 장애물 센서
 class DetectorSensor(models.Model):

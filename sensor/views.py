@@ -1,6 +1,6 @@
 from turtle import right
 from django.http import HttpResponse
-from .models import TemperatureSensor as Temp, HumiditySensor as Humi, VibratorSensor as Vib, ProximitySensor as Prox, LightDetector as LightD, DetectorSensor as Detector
+from .models import TemperatureSensor as Temp, HumiditySensor as Humi, VibratorSensor as Vib, ProximitySensor as Prox, LightSensor as LightD, DetectorSensor as Detector
 from django.shortcuts import render
 from django.core import serializers
 from django.http import JsonResponse
