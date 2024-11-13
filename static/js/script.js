@@ -64,7 +64,7 @@ $(document).ready(function () {
 
     };
     // up control widget
-    var updateInterval = 50;
+    var updateInterval = 500;
     var plot = $.plot($("#realtime"), [getData()], options);
 
     function update() {
@@ -145,7 +145,7 @@ $(document).ready(function () {
 
     };
     // up control widget
-    var updateInterval = 50;
+    var updateInterval = 500;
     var plot = $.plot($("#realtime1"), [getData()], options);
 
     function update() {
@@ -165,7 +165,7 @@ $(document).ready(function () {
             data = data.slice(1);
 
         $.ajax({
-            url: "/sensor/getTemp/" + queryCnt,
+            url: "/sensor/getLightD/" + queryCnt,
             type: "GET",
             dataType: "json",
             success: (res) => {
@@ -226,7 +226,7 @@ $(document).ready(function () {
 
     };
     // up control widget
-    var updateInterval = 50;
+    var updateInterval = 500;
     var plot = $.plot($("#realtime2"), [getData()], options);
 
     function update() {
