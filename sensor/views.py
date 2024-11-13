@@ -1,6 +1,6 @@
 from turtle import right
 from django.http import HttpResponse
-from .models import TemperatureSensor as Temp, HumiditySensor as Humi, VibratorSensor as Vib, ProximitySensor as Prox, LightDetector as LightD, LightSensor as LightS, DetectorSensor as Detector, BuzzerSensor as Buzzer
+from .models import TemperatureSensor as Temp, HumiditySensor as Humi, VibratorSensor as Vib, ProximitySensor as Prox, LightDetector as LightD, DetectorSensor as Detector
 from django.shortcuts import render
 from django.core import serializers
 from django.http import JsonResponse
@@ -73,17 +73,6 @@ def setLightD(request):
     except KeyError:
         return JsonResponse({"message": "KEY_ERROR"}, status=400)
 
-# LED
-def getLightS(request, cnt):
-    results = list(LightS.objects.all().order_by('-reg_date').values())[:cnt][::-1]
-    return JsonResponse(results, safe=False)
-
-def setLightS(request):
-    try:
-        LightS.objects.create(value = request.POST['value'])
-        return JsonResponse({"message": "OK"}, status=200)
-    except KeyError:
-        return JsonResponse({"message": "KEY_ERROR"}, status=400)
 
 # 장애물 센서
 def getDetector(request, cnt):
@@ -93,17 +82,6 @@ def getDetector(request, cnt):
 def setDetector(request):
     try:
         Detector.objects.create(value = request.POST['value'])
-        return JsonResponse({"message": "OK"}, status=200)
-    except KeyError:
-        return JsonResponse({"message": "KEY_ERROR"}, status=400)
-# 버저
-def getBuzzer(request, cnt):
-    results = list(Buzzer.objects.all().order_by('-reg_date').values())[:cnt][::-1]
-    return JsonResponse(results, safe=False)
-
-def setBuzzer(request):
-    try:
-        Buzzer.objects.create(value = request.POST['value'])
         return JsonResponse({"message": "OK"}, status=200)
     except KeyError:
         return JsonResponse({"message": "KEY_ERROR"}, status=400)
