@@ -9,7 +9,7 @@ $(document).ready(function () {
             data = data.slice(1);
 
         $.ajax({
-            url: "/sensor/getDetector/" + queryCnt,
+            url: "/sensor/getirDetect/" + queryCnt,
             type: "GET",
             dataType: "json",
             success: (res) => {
