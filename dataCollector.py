@@ -51,10 +51,12 @@ while(1):
             print("Invaild Value")
             continue
 
-        if cmd not in ['Temp','Humi','Vib','Prox']:
+        if cmd not in ['Temp','Humi','Vib','Prox','irDetect']:
             print("Invaild Command")
             continue
         try:
             requests.post("http://localhost:8000/sensor/set" + cmd, data = data)
         except:
             print("Invaild Command")
+
+            
