@@ -84,8 +84,9 @@ $(document).ready(function () {
             data = data.slice(1);
 
         $.ajax({
-            url: "/sensor/getTemp/" + queryCnt,
+            url: "/sensor/getTemp/" + queryCnt + "?timestamp=" + newDate().getTime(),
             type: "GET",
+            cache: false,
             dataType: "json",
             success: (res) => {
                 data = res;
