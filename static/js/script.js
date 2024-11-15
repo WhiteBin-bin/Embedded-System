@@ -64,7 +64,7 @@ $(document).ready(function () {
 
     };
     // up control widget
-    var updateInterval = 100;
+    var updateInterval = 1000;
     var plot = $.plot($("#realtime"), [getData()], options);
 
     function update() {
@@ -146,7 +146,7 @@ $(document).ready(function () {
 
     };
     // up control widget
-    var updateInterval = 500;
+    var updateInterval = 1000;
     var plot = $.plot($("#realtime1"), [getData()], options);
 
     function update() {
@@ -227,7 +227,7 @@ $(document).ready(function () {
 
     };
     // up control widget
-    var updateInterval = 500;
+    var updateInterval = 1000;
     var plot = $.plot($("#realtime2"), [getData()], options);
 
     function update() {
