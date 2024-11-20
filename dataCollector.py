@@ -1,8 +1,12 @@
 import serial
 import requests
 import random, time
+import re
+import json
 
 flag = False
+headers = {'Content-Type': 'application/json'}
+
 # config COM port
 while(1):
     time.sleep(0.1)
@@ -29,21 +33,22 @@ while(1):
         smo = ser.readline()
         if not smo:
             continue
-        #print(smo)
-        msg = smo.decode()[:len(smo)-1].split(" : ")
-        cmd = msg[0]
+        print(smo)
+        msg = smo.decode()
+        msg = msg.replace('\x00', '').replace('\n', '')
+        # 반복문 넣기
         print(msg)
         try:
-            data = {'value' : float(msg[1][0])}
+            data = {'value' : msg}
             print(data)
         except:
             print("Invaild Value")
             continue
-        
-        if cmd not in ['irDetect']:
-            print("Invaild Command")
-            continue
+        start = time.time()
         try:
-            requests.post("http://localhost:8000/sensor/set" + cmd, data = data)
+            requests.post("http://localhost:8000/sensor/setSensor", data = json.dumps(data),headers=headers)
+            # lora보드로 데이터 1줄 받는게 총 16초 걸림 
         except:
             print("Invaild Command")
+        end = time.time()
+        print(f"{end - start:.5f} sec")
