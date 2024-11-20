@@ -7,9 +7,6 @@ flag = False
 while(1):
     time.sleep(0.1)
     portName = input("Enter the port name:")
-    if portName == "test":
-       flag = True
-       break
     try:
         # config COM port section
         ser = serial.Serial(
@@ -28,35 +25,25 @@ while(1):
 
 while(1):
     time.sleep(0.1)
-    if flag: 
-        try:
-            data = {'value': random.random()*100}
-            print(requests.post("http://localhost:8000/sensor/setTemp", data).json())
-        except:
-            print("Could not connect Web Server")
-        time.sleep(0.5)
-        continue
-
     if ser.readable():
         smo = ser.readline()
         if not smo:
             continue
-        print(smo)
+        #print(smo)
         msg = smo.decode()[:len(smo)-1].split(" : ")
         cmd = msg[0]
         print(msg)
         try:
-            data = {'value' : float(msg[1])}
+            data = {'value' : float(msg[1][0])}
+            print(data)
         except:
             print("Invaild Value")
             continue
-
-        if cmd not in ['Temp','Humi','Vib','Prox','irDetect']:
+        
+        if cmd not in ['irDetect']:
             print("Invaild Command")
             continue
         try:
             requests.post("http://localhost:8000/sensor/set" + cmd, data = data)
         except:
             print("Invaild Command")
-
-            
