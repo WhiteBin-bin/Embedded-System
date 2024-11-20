@@ -2,122 +2,108 @@
 
 $(document).ready(function () {
     var data = [];
-    var queryCnt = 100;
+    var queryCnt = 100; // 한 번에 가져올 데이터 개수
+    var sensorData = {}; // 센서 데이터 저장 객체
+    var res1 = []; // IR 데이터
+    var res2 = []; // TILT 데이터
+    var res3 = []; // Light 데이터
 
+    // 공통 옵션 정의
+    var options = {
+        colors: ["#30323c"],
+        series: {
+            shadowSize: 0,
+            lines: {
+                show: true,
+                fill: true,
+                fillColor: {
+                    colors: [{ opacity: 0.5 }, { opacity: 0.5 }]
+                }
+            }
+        },
+        yaxis: {
+            min: 0,
+            max: 1,
+            tickSize: 1
+        },
+        xaxis: {
+            show: false,
+            min: 0,
+            max: queryCnt
+        },
+        points: { show: true },
+        grid: {
+            backgroundColor: '#fff',
+            borderWidth: 1,
+            borderColor: '#fff',
+            hoverable: true
+        }
+    };
+
+    // 첫 번째 차트 (IR 데이터)
+    var plot1 = $.plot($("#realtime1"), [res1], options);
+
+    // 두 번째 차트 (TILT 데이터)
+    var plot2 = $.plot($("#realtime2"), [res2], options);
+
+    // 세 번째 차트 (Light 데이터)
+    var plot3 = $.plot($("#realtime3"), [res3], options);
+
+    // 센서 데이터를 가져오는 함수
     function getData() {
         $.ajax({
-            url: "/sensor/getSensor/" + queryCnt, // 하나의 요청에서 모든 데이터 가져오기
+            url: "/sensor/getSensor/" + queryCnt,
             type: "GET",
             dataType: "json",
             success: (res) => {
-                // res는 IR:0, Light:1, TILT:0, But:0 형식으로 가정
                 data = res;
-                updateCharts(data); // 데이터가 성공적으로 받아지면 차트 업데이트
+
+                // 데이터 분리
+                res1 = [];
+                res2 = [];
+                res3 = [];
+
+                for (var i = 0; i < data.length; ++i) {
+                    var pairs = data[i]['value'];
+                    var lis = pairs.split(",");
+                    lis.forEach(pair => {
+                        const [key, value] = pair.split(':');
+                        sensorData[key.trim()] = parseFloat(value);
+                    });
+
+                    // 각 센서 값들을 배열에 추가
+                    res1.push([i, sensorData['IR']]);
+                    res2.push([i, sensorData['TILT']]);
+                    res3.push([i, sensorData['Light']]);
+                }
+
+                // 차트 업데이트 함수 호출 (데이터를 받은 후에만 업데이트)
+                updateCharts();
             },
             error: (error) => {
-                console.log(error);
+                console.log("데이터를 가져오는 중 오류 발생:", error);
+                setTimeout(getData, updateInterval);
             }
         });
     }
 
-    function updateCharts(data) {
-        // 데이터를 두 개씩 묶어서 {'IR': 0, 'Light': 1, ...} 형태로 변환
-        var sensorData = {};
-        var pairs = data.split(", ");
-        for (var i = 0; i < pairs.length; i++) {
-            var keyValue = pairs[i].split(":");
-            sensorData[keyValue[0]] = parseFloat(keyValue[1]);
-        }
-        console.log(sensorData);
-        // 각 센서 데이터에 맞게 차트를 업데이트
-        updateIRChart(sensorData['IR']);
-        updateTempChart(sensorData['TILT']);
-        updateLightChart(sensorData['Light']);
+    // 차트를 업데이트하는 함수
+    function updateCharts() {
+        // 각 차트에 데이터 설정 및 갱신
+        plot1.setData([res1]);
+        plot2.setData([res2]);
+        plot3.setData([res3]);
+
+        plot1.draw();
+        plot2.draw();
+        plot3.draw();
+
+        setTimeout(getData, updateInterval); // 일정 시간 후 다시 데이터를 가져옴
     }
 
-    function updateIRChart(irValue) {
-        var irData = [[0, irValue]]; // IR 데이터
-        var irOptions = {
-            colors: ["#30323c"],
-            series: {
-                shadowSize: 0,
-                lines: {
-                    show: true,
-                    fill: true,
-                    fillColor: { colors: [{ opacity: 0.5 }, { opacity: 0.5 }] }
-                }
-            },
-            yaxis: { min: 0, max: 1, tickSize: 1 },
-            xaxis: { show: false },
-            points: { show: true },
-            grid: { backgroundColor: '#fff', borderWidth: 1, borderColor: '#fff', hoverable: true }
-        };
+    // 업데이트 간격 설정 및 시작
+    var updateInterval = 1000; // 1초마다 업데이트
 
-        var plot = $.plot($("#realtime1"), [irData], irOptions);
-        plot.draw();
-    }
-
-    function updateTempChart(tempValue) {
-        var tempData = [[0, tempValue]]; // TILT 데이터 (온도와 비슷한 형태로 가정)
-        var tempOptions = {
-            colors: ["#30323c"],
-            series: {
-                shadowSize: 0,
-                lines: {
-                    show: true,
-                    fill: true,
-                    fillColor: { colors: [{ opacity: 0.5 }, { opacity: 0.5 }] }
-                }
-            },
-            yaxis: {
-                min: 0,
-                max: 180,
-                tickSize: 90,
-                tickFormatter: function (val, axis) {
-                    return val + ' °C';
-                }
-            },
-            xaxis: { show: true, min: 0, max: 1, tickSize : 1 },
-            points: { show:true },
-            grid:{backgroundColor:'#fff',borderWidth :1,borderColor:'#fff',hoverable:true}
-        };
-
-        var plot = $.plot($("#realtime2"), [tempData], tempOptions);
-        plot.draw();
-    }
-
-    function updateLightChart(lightValue) {
-        var lightData = [[0, lightValue]]; // Light 데이터
-        var lightOptions = {
-            colors:["#30323c"],
-            series:{
-                shadowSize :0,
-                lines:{
-                    show:true,
-                    fill:true,
-                    fillColor:{colors:[{opacity:.5},{opacity:.5}]}
-                 }
-             },
-             yaxis:{
-                 min :400,
-                 max :1000,
-                 tickSize :200,
-                 tickFormatter:function(val){return val+' Lux';}
-              },
-              xaxis:{show:true,min :0,max :1,tickSize :1},
-              points:{show:true},
-              grid:{backgroundColor:'#fff',borderWidth :1,borderColor:'#fff',hoverable:true}
-         };
-
-         var plot = $.plot($("#realtime3"), [lightData], lightOptions);
-         plot.draw();
-     }
-
-    // 주기적으로 데이터를 가져와서 업데이트
-    function update() {
-        getData(); // 데이터를 가져오고 차트를 업데이트
-        setTimeout(update, 1000); // 매 초마다 업데이트
-    }
-
-    update(); // 첫 업데이트 시작
+    // 첫 번째 호출로 데이터를 가져오기 시작
+    getData();
 });
