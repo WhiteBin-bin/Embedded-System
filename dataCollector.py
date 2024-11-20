@@ -33,8 +33,10 @@ while(1):
         smo = ser.readline()
         if not smo:
             continue
-        print(smo)
         msg = smo.decode()
+        print(msg)
+        if msg[:2]!="IR":
+            continue
         msg = msg.replace('\x00', '').replace('\n', '')
         # 반복문 넣기
         print(msg)
