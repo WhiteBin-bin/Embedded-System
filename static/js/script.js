@@ -6,11 +6,11 @@ $(document).ready(function () {
 
     function getData() {
         $.ajax({
-            url: "/sensor/getAllData/" + queryCnt, // 하나의 요청에서 모든 데이터 가져오기
+            url: "/sensor/getSensor/" + queryCnt, // 하나의 요청에서 모든 데이터 가져오기
             type: "GET",
             dataType: "json",
             success: (res) => {
-                // res는 ['IR', '0', 'Light', '1', 'TILT', '0', 'But', '0'] 형식으로 가정
+                // res는 IR:0, Light:1, TILT:0, But:0 형식으로 가정
                 data = res;
                 updateCharts(data); // 데이터가 성공적으로 받아지면 차트 업데이트
             },
@@ -23,10 +23,12 @@ $(document).ready(function () {
     function updateCharts(data) {
         // 데이터를 두 개씩 묶어서 {'IR': 0, 'Light': 1, ...} 형태로 변환
         var sensorData = {};
-        for (var i = 0; i < data.length; i += 2) {
-            sensorData[data[i]] = parseFloat(data[i + 1]);
+        var pairs = data.split(", ");
+        for (var i = 0; i < pairs.length; i++) {
+            var keyValue = pairs[i].split(":");
+            sensorData[keyValue[0]] = parseFloat(keyValue[1]);
         }
-
+        console.log(sensorData);
         // 각 센서 데이터에 맞게 차트를 업데이트
         updateIRChart(sensorData['IR']);
         updateTempChart(sensorData['TILT']);
