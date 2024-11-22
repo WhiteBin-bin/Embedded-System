@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Project 6조</title>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/neodgm/neodgm-webfont@1.600/neodgm/style.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>스마트 지팡이 관리 시스템</h1>
+            <nav class="top-right-navigation">
+                <ul>
+                    <li><a href="{% url 'cane_description' %}">제품 개요</a></li>
+                    <li><a href="{% url 'sensor_description' %}">센서 사양</a></li>
+                    <li><a href="{% url 'our_team' %}">개발 팀 소개</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h2 class="LittleTitle">실시간 데이터 모니터링</h2>
+        <div class="groupClass">
+            <div class="pageClass">
+                <div class="LittleTitle">Static Table</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>ID</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if sensor_value_list %}
+                        {% for sensor in sensor_value_list %}
+                        <tr>
+                            <td>{{ sensor.reg_date }}</td>
+                            <td>{{ sensor.id }}</td>
+                            <td>{{ sensor.value }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="3">No sensor values are available.</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="grid">
+                <div>
+                    <p>조도 센서 상태</p>
+                    <div class="sensor-card">데이터 시각화</div>
+                </div>
+                <div>
+                    <p>장애물 센서 상태</p>
+                    <div class="sensor-card">데이터 시각화</div>
+                </div>
+                <div>
+                    <p>기울기 센서 상태</p>
+                    <div class="sensor-card">데이터 시각화</div>
+                </div>
+                <div>
+                    <p>LED 상태</p>
+                    <div class="sensor-card">
+                        <svg class="icon-yellow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v12m0 0l-3-3m3 3l3-3m-6 4.5a9 9 0 0018 0V12" />
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <p>부저 상태</p>
+                    <div class="sensor-card">
+                        <svg class="icon-red" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6h6v6m-3 0v3" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'js/flot/jquery.flot.js' %}"></script>
+    <script src="{% static 'js/flot/jquery.flot.resize.js' %}"></script>
+    <script src="{% static 'js/flot/jquery.flot.stack.js' %}"></script>
+    <script src="{% static 'js/flot/jquery.flot.time.js' %}"></script>
+    <script src="{% static 'js/flot/jquery.flot.categories.js' %}"></script>
+    <script src="{% static 'js/flot/jquery.flot.pie.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>
