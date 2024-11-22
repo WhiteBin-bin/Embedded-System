@@ -93,7 +93,7 @@ $(document).ready(function () {
         plot1.setData([res1]);
         plot2.setData([res2]);
         plot3.setData([res3]);
-
+        console.log(sensorData);
         plot1.draw();
         plot2.draw();
         plot3.draw();
