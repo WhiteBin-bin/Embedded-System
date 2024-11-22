@@ -1,0 +1,177 @@
+/* General Body Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7f9fc;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styling */
+header {
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+header h1 {
+    color: #2b6cb0; /* Tailwind's blue-700 */
+    font-size: 1.5rem;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li a {
+    color: #4a5568; /* Tailwind's gray-700 */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+header nav ul li a:hover {
+    color: #3182ce; /* Tailwind's blue-600 */
+}
+
+/* Main Heading */
+main h2 {
+    color: #2c5282; /* Tailwind's blue-800 */
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Table Styling */
+.table-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin: 2rem auto;
+    width: calc(100% - 2rem); /* 양옆 1rem씩 여유 */
+    max-width: 1400px; /* 최대 폭을 더 넓게 */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 1rem;
+    text-align: left;
+}
+
+table th,
+table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e2e8f0; /* Tailwind's gray-300 */
+}
+
+table th {
+    background-color: #edf2f7; /* Tailwind's gray-100 */
+    color: #4a5568; /* Tailwind's gray-700 */
+    text-transform: uppercase;
+    font-size: 0.875rem;
+}
+
+table tr:hover {
+    background-color: #f7fafc; /* Tailwind's gray-50 */
+}
+
+.text-green {
+    color: #38a169; /* Tailwind's green-500 */
+}
+
+.text-red {
+    color: #e53e3e; /* Tailwind's red-500 */
+}
+
+/* Sensor Card Styling */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+    margin: 2rem auto; /* 위아래 여백 추가 */
+    width: calc(100% - 2rem); /* 양옆 1rem씩 여유 */
+    max-width: 1400px; /* 최대 폭을 더 넓게 */
+}
+
+.grid div {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.grid div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.grid p {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #2d3748; /* Tailwind's gray-800 */
+}
+
+.sensor-card {
+    height: 160px;
+    width: 100%;
+    background-color: #edf2f7; /* Tailwind's gray-100 */
+    border: 1px solid #e2e8f0; /* Tailwind's gray-300 */
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: #718096; /* Tailwind's gray-600 */
+}
+
+/* Icon Styling */
+.icon-yellow {
+    height: 64px;
+    width: 64px;
+    color: #ecc94b; /* Tailwind's yellow-400 */
+}
+
+.icon-red {
+    height: 64px;
+    width: 64px;
+    color: #e53e3e; /* Tailwind's red-500 */
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    header .container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    table {
+        font-size: 0.875rem;
+    }
+}
