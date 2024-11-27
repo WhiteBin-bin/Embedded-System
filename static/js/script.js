@@ -8,7 +8,7 @@ $(document).ready(function () {
     var res2 = []; // TILT 데이터
     var res3 = []; // Light 데이터
 
-    
+    // 공통 옵션 정의
     var options = {
         colors: ["#30323c"],
         series: {
@@ -40,16 +40,16 @@ $(document).ready(function () {
         }
     };
 
-    
+    // 첫 번째 차트 (IR 데이터)
     var plot1 = $.plot($("#realtime1"), [res1], options);
 
-    
+    // 두 번째 차트 (TILT 데이터)
     var plot2 = $.plot($("#realtime2"), [res2], options);
 
-    
+    // 세 번째 차트 (Light 데이터)
     var plot3 = $.plot($("#realtime3"), [res3], options);
 
-    
+    // 센서 데이터를 가져오는 함수
     function getData() {
         $.ajax({
             url: "/sensor/getSensor/" + queryCnt,
@@ -58,7 +58,7 @@ $(document).ready(function () {
             success: (res) => {
                 data = res;
 
-                
+                // 데이터 분리
                 res1 = [];
                 res2 = [];
                 res3 = [];
@@ -71,7 +71,7 @@ $(document).ready(function () {
                         sensorData[key.trim()] = parseFloat(value);
                     });
 
-                    
+                    // 각 센서 값들을 배열에 추가
                     res1.push([i, sensorData['IR']]);
                     res2.push([i, sensorData['TILT']]);
                     res3.push([i, sensorData['Light']]);
