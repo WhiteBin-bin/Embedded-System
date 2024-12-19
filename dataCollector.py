@@ -31,6 +31,10 @@ while(1):
        print("Invaild Value")
 
 
+##
+##
+##
+
 while(1):
     time.sleep(0.1)
     if ser.readable():
