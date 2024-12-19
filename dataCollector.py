@@ -7,10 +7,6 @@ import json
 flag = False
 headers = {'Content-Type': 'application/json'}
 
-##
-###
-##
-
 # config COM port
 while(1):
     time.sleep(0.1)
@@ -31,9 +27,6 @@ while(1):
        print("Invaild Value")
 
 
-##
-##
-##
 
 while(1):
     time.sleep(0.1)
