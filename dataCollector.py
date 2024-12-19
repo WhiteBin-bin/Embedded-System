@@ -7,6 +7,11 @@ import json
 flag = False
 headers = {'Content-Type': 'application/json'}
 
+##
+##
+##
+
+
 # config COM port
 while(1):
     time.sleep(0.1)
@@ -49,7 +54,6 @@ while(1):
         start = time.time()
         try:
             requests.post("http://localhost:8000/sensor/setSensor", data = json.dumps(data),headers=headers)
-            # lora보드로 데이터 1줄 받는게 총 16초 걸림 
         except:
             print("Invaild Command")
         end = time.time()
